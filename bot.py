@@ -49,13 +49,3 @@ class GAMSo_Bot(Bot):
                     await message.channel.send("-e chamado")
         elif "honk" in message.content.lower():
             await message.channel.send("Honk!")
-
-    '''
-    @commands(name = 'echo', aliases = ['say', 'rp'])
-    @commands.is_owner()
-    async def echo_message(self, ctx, *, message):
-        await ctx.message.delete()
-        await ctx.send(message)
-    '''
-client = GAMSo_Bot(PREFIX)
-client.run(TOKEN)
