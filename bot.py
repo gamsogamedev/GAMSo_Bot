@@ -1,4 +1,5 @@
-from env_loader import TOKEN, PREFIX, MARTIM_ID, SONA_ID, SONA_ID2, DESCRIPTION
+import discord
+from env_loader import TOKEN, PREFIX, MARTIM_ID, SONA_ID, SONA_ID2, DESCRIPTION, DEV_CHANNEL_ID
 from discord import Embed, File
 from discord.ext import commands
 from discord.ext.commands import Bot, CommandNotFound
@@ -29,12 +30,12 @@ class GAMSo_Bot(Bot):
     async def on_ready(self):
         print('{0.user} is honking!'.format(self))
 
-    async def on_message(self, message):
-        if self.user == message.author:
+    async def on_message(self, message : discord.Message):
+        await self.process_commands(message)
+
+        if (self.user == message.author) or (message.channel.id != DEV_CHANNEL_ID):
             return
-        if message.channel.id != 875853641037258762:
-            return
-        if message.content.startswith(PREFIX):
+        elif message.content.startswith(PREFIX):
             content = message.content[(len(PREFIX) - 1):].split(" ")[1:]
             command, args = content[0], content[1:]
             print(content)
