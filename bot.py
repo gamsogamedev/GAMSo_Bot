@@ -10,6 +10,9 @@ OWNER_IDS = ["143109930134536192", "440569289670656010", "866520555436245032"] #
 scheduler = AsyncIOScheduler()
 
 class GAMSo_Bot(Bot):
+    async def run(self):
+        super().run(TOKEN, reconnect = True)
+
     async def on_ready(self):
         print('{0.user} is honking!'.format(self))
 
@@ -31,13 +34,3 @@ class GAMSo_Bot(Bot):
                     await message.channel.send("-e chamado")
         elif "honk" in message.content.lower():
             await message.channel.send("Honk!")
-
-    '''
-    @commands(name = 'echo', aliases = ['say', 'rp'])
-    @commands.is_owner()
-    async def echo_message(self, ctx, *, message):
-        await ctx.message.delete()
-        await ctx.send(message)
-    '''
-client = GAMSo_Bot(PREFIX)
-client.run(TOKEN)
