@@ -1,13 +1,9 @@
-from os import getenv
-from dotenv import load_dotenv
+from env_loader import TOKEN
 from discord import Embed, File
 from discord.ext import commands
 from discord.ext.commands import Bot, CommandNotFound
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-load_dotenv()
-
-TOKEN = getenv('TOKEN')
 PREFIX = "honk "
 OWNER_IDS = ["143109930134536192", "440569289670656010", "866520555436245032"] # Martim, Sona, Sona celular
 
