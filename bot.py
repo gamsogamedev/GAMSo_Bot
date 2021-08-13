@@ -2,7 +2,7 @@ import discord
 from env_loader import TOKEN, PREFIX, MARTIM_ID, SONA_ID, SONA_ID2, DESCRIPTION, DEV_CHANNEL_ID
 from discord import Embed, File
 from discord.ext import commands
-from discord.ext.commands import Bot, CommandNotFound
+from discord.ext.commands import Bot, CommandNotFound, command
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 scheduler = AsyncIOScheduler()
@@ -48,3 +48,9 @@ class GAMSo_Bot(Bot):
                     await message.channel.send("-e chamado")
         elif "honk" in message.content.lower():
             await message.channel.send("Honk!")
+
+    @command(name = 'echo', aliases = ['say', 'rp'])
+    @commands.is_owner()
+    async def echo_message(self, ctx, *, message):
+        await ctx.message.delete()
+        await ctx.send(message)
