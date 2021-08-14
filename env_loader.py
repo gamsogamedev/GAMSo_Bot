@@ -6,9 +6,9 @@ load_dotenv()
 TOKEN = getenv('TOKEN')
 
 PREFIX = getenv("PREFIX")
-MARTIM_ID = getenv("MARTIM_ID")
-SONA_ID = getenv("SONA_ID")
-SONA_ID2 = getenv("SONA_ID2")
+MARTIM_ID = int(getenv("MARTIM_ID"))
+SONA_ID = int(getenv("SONA_ID"))
+SONA_ID2 = int(getenv("SONA_ID2"))
 
 DESCRIPTION = getenv("DESCRIPTION")
 
