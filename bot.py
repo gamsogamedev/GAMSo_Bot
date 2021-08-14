@@ -1,3 +1,4 @@
+from cog_teste import Teste_cog
 import discord
 from env_loader import TOKEN, PREFIX, MARTIM_ID, SONA_ID, SONA_ID2, DESCRIPTION, DEV_CHANNEL_ID
 from discord import Embed, File
@@ -31,10 +32,15 @@ class GAMSo_Bot(Bot, Cog):
     async def on_ready(self):
         print('{0.user} is honking!'.format(self))
 
+        self.add_cog(Teste_cog(self))
+        print('cog loadada')
+
+    """
     async def process_commands(self, message):
         ctx = await self.get_context(message)
         print(ctx.command)
         await self.invoke(ctx)
+    """
 
     async def on_message(self, message : discord.Message):
         if not message.author.bot:
@@ -63,6 +69,7 @@ class GAMSo_Bot(Bot, Cog):
             await message.channel.send("Honk!")
     '''
 
+""" 
 botzasso = GAMSo_Bot()
 
 @botzasso.command(name = 'echo')
@@ -70,4 +77,5 @@ async def _echo(ctx, message: str):
     await ctx.message.delete()
     await ctx.send(message)
 
-botzasso.run()
+botzasso.run() 
+"""
