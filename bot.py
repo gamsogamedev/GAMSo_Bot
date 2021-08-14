@@ -20,7 +20,7 @@ class GAMSo_Bot(Bot, Cog):
         self.description = DESCRIPTION
         self.owner_ids = set([MARTIM_ID, SONA_ID, SONA_ID2]) # Martim, Sona, Sona celular
 
-        super().__init__(command_prefix = self.command_prefix, description = self.description, owner_ids = self.owner_ids)
+        super().__init__(self.command_prefix, description = self.description, owner_ids = self.owner_ids)
 
     def run(self):
 
@@ -40,6 +40,12 @@ class GAMSo_Bot(Bot, Cog):
         if not message.author.bot:
             await self.process_commands(message)
 
+
+    async def on_command_error(self, context, exception):
+        print(exception)
+        await context.channel.send("comando desconhecido")
+
+    '''
         if (self.user == message.author) or (message.channel.id != DEV_CHANNEL_ID):
             return
         elif message.content.startswith(PREFIX):
@@ -55,6 +61,7 @@ class GAMSo_Bot(Bot, Cog):
                     await message.channel.send("-e chamado")
         elif "honk" in message.content.lower():
             await message.channel.send("Honk!")
+    '''
 
 botzasso = GAMSo_Bot()
 
