@@ -13,3 +13,4 @@ SONA_ID2 = int(getenv("SONA_ID2"))
 DESCRIPTION = getenv("DESCRIPTION")
 
 DEV_CHANNEL_ID = int(getenv("DEV_CHANNEL_ID"))
+BATE_PAPO_ID = int(getenv("BATE_PAPO_ID"))

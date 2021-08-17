@@ -1,5 +1,5 @@
 import discord
-from env_loader import TOKEN, PREFIX, MARTIM_ID, SONA_ID, SONA_ID2, DESCRIPTION, DEV_CHANNEL_ID
+from env_loader import TOKEN, PREFIX, MARTIM_ID, SONA_ID, SONA_ID2, DESCRIPTION, BATE_PAPO_ID
 from discord.ext.commands import Bot
 from schedule import Reminder, Schedule_Cog, REMINDER_DICTIONARY
 
@@ -37,3 +37,6 @@ class GAMSo_Bot(Bot):
     async def on_command_error(self, context, exception):
         print(exception)
         await context.channel.send("Comando desconhecido.")
+
+    async def on_member_join(self, member):
+        await self.get_channel(BATE_PAPO_ID).send('Bem vinde ao discord do GAMSo {}! É um prazer te ter por aqui!\nSinta se a vontade pra se apresentar e conversar com a gente. Confira também nossos jogos e redes sociais!'.format(member.mention))
