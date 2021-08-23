@@ -2,6 +2,7 @@ import discord
 from env_loader import TOKEN, PREFIX, MARTIM_ID, SONA_ID, SONA_ID2, DESCRIPTION, BATE_PAPO_ID
 from discord.ext.commands import Bot
 from schedule import Reminder, Schedule_Cog, REMINDER_DICTIONARY
+from mod import Moderation_Cog
 
 class GAMSo_Bot(Bot):
     def __init__(self):
@@ -26,6 +27,10 @@ class GAMSo_Bot(Bot):
 
     async def on_ready(self):
         print('{0.user} is honking!'.format(self))
+
+        
+        self.add_cog(Moderation_Cog(self))
+        print('Finished loading moderation commands.')
 
         self.add_cog(Schedule_Cog(self))
         print('Finished loading schedule commands.')
