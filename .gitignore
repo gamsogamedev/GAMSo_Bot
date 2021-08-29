@@ -8,7 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
+# build/
 develop-eggs/
 dist/
 downloads/
@@ -126,3 +126,8 @@ dmypy.json
 
 # test script
 delaytest.py
+
+node_modules
+config.json
+
+.vscode
