@@ -126,3 +126,8 @@ dmypy.json
 
 # test script
 delaytest.py
+
+teste.cpp
+teste.exe
+
+.vscode/

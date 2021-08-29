@@ -1,3 +1,5 @@
+#include <iostream>
+#include <cstdlib>
 #include "sleepy_discord/sleepy_discord.h"
 
 using std::getenv;
