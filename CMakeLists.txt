@@ -1,6 +1,6 @@
 #CMakeLists.txt
 cmake_minimum_required (VERSION 3.6)
-project(example)
+project(GAMSo)
 
 add_executable(GAMSo_bot exemplo_sleepy.cpp)
 
