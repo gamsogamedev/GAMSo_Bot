@@ -118,7 +118,6 @@ dist
 .pnp.*
 
 .vscode/
-.vscode
 
 node_modules
 config.json
