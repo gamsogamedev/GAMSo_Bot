@@ -1,0 +1,3 @@
+C:/Users/marti/projetos/GAMSo_Bot/build/asio-download/CMakeFiles/asio-download.dir
+C:/Users/marti/projetos/GAMSo_Bot/build/asio-download/CMakeFiles/edit_cache.dir
+C:/Users/marti/projetos/GAMSo_Bot/build/asio-download/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,13 @@
+# Target labels
+ cpr-download
+# Source files and their labels
+C:/Users/marti/projetos/GAMSo_Bot/build/cpr-download/CMakeFiles/cpr-download
+C:/Users/marti/projetos/GAMSo_Bot/build/cpr-download/CMakeFiles/cpr-download.rule
+C:/Users/marti/projetos/GAMSo_Bot/build/cpr-download/CMakeFiles/cpr-download-complete.rule
+C:/Users/marti/projetos/GAMSo_Bot/build/cpr-download/cpr-download-prefix/src/cpr-download-stamp/cpr-download-build.rule
+C:/Users/marti/projetos/GAMSo_Bot/build/cpr-download/cpr-download-prefix/src/cpr-download-stamp/cpr-download-configure.rule
+C:/Users/marti/projetos/GAMSo_Bot/build/cpr-download/cpr-download-prefix/src/cpr-download-stamp/cpr-download-download.rule
+C:/Users/marti/projetos/GAMSo_Bot/build/cpr-download/cpr-download-prefix/src/cpr-download-stamp/cpr-download-install.rule
+C:/Users/marti/projetos/GAMSo_Bot/build/cpr-download/cpr-download-prefix/src/cpr-download-stamp/cpr-download-mkdir.rule
+C:/Users/marti/projetos/GAMSo_Bot/build/cpr-download/cpr-download-prefix/src/cpr-download-stamp/cpr-download-patch.rule
+C:/Users/marti/projetos/GAMSo_Bot/build/cpr-download/cpr-download-prefix/src/cpr-download-stamp/cpr-download-test.rule

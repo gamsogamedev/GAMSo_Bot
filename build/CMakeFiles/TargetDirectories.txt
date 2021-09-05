@@ -1,0 +1,3 @@
+C:/Users/marti/projetos/GAMSo_Bot/build/CMakeFiles/GAMSo_bot.dir
+C:/Users/marti/projetos/GAMSo_Bot/build/CMakeFiles/edit_cache.dir
+C:/Users/marti/projetos/GAMSo_Bot/build/CMakeFiles/rebuild_cache.dir

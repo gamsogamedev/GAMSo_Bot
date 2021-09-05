@@ -1,0 +1,3 @@
+C:/Users/marti/projetos/GAMSo_Bot/build/websocketpp-download/CMakeFiles/websocketpp-download.dir
+C:/Users/marti/projetos/GAMSo_Bot/build/websocketpp-download/CMakeFiles/edit_cache.dir
+C:/Users/marti/projetos/GAMSo_Bot/build/websocketpp-download/CMakeFiles/rebuild_cache.dir

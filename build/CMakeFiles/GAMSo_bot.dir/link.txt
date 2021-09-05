@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\GAMSo_bot.dir/objects.a
+C:\PROGRA~1\MINGW-~1\bin\ar.exe qc CMakeFiles\GAMSo_bot.dir/objects.a @CMakeFiles\GAMSo_bot.dir\objects1.rsp
+C:\PROGRA~1\MINGW-~1\bin\X86_64~2.EXE -g -Wl,--whole-archive CMakeFiles\GAMSo_bot.dir/objects.a -Wl,--no-whole-archive -o GAMSo_bot.exe -Wl,--out-implib,libGAMSo_bot.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\GAMSo_bot.dir\linklibs.rsp

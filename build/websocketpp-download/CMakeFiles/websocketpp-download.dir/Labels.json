@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/Users/marti/projetos/GAMSo_Bot/build/websocketpp-download/CMakeFiles/websocketpp-download"
+		},
+		{
+			"file" : "C:/Users/marti/projetos/GAMSo_Bot/build/websocketpp-download/CMakeFiles/websocketpp-download.rule"
+		},
+		{
+			"file" : "C:/Users/marti/projetos/GAMSo_Bot/build/websocketpp-download/CMakeFiles/websocketpp-download-complete.rule"
+		},
+		{
+			"file" : "C:/Users/marti/projetos/GAMSo_Bot/build/websocketpp-download/websocketpp-download-prefix/src/websocketpp-download-stamp/websocketpp-download-build.rule"
+		},
+		{
+			"file" : "C:/Users/marti/projetos/GAMSo_Bot/build/websocketpp-download/websocketpp-download-prefix/src/websocketpp-download-stamp/websocketpp-download-configure.rule"
+		},
+		{
+			"file" : "C:/Users/marti/projetos/GAMSo_Bot/build/websocketpp-download/websocketpp-download-prefix/src/websocketpp-download-stamp/websocketpp-download-download.rule"
+		},
+		{
+			"file" : "C:/Users/marti/projetos/GAMSo_Bot/build/websocketpp-download/websocketpp-download-prefix/src/websocketpp-download-stamp/websocketpp-download-install.rule"
+		},
+		{
+			"file" : "C:/Users/marti/projetos/GAMSo_Bot/build/websocketpp-download/websocketpp-download-prefix/src/websocketpp-download-stamp/websocketpp-download-mkdir.rule"
+		},
+		{
+			"file" : "C:/Users/marti/projetos/GAMSo_Bot/build/websocketpp-download/websocketpp-download-prefix/src/websocketpp-download-stamp/websocketpp-download-patch.rule"
+		},
+		{
+			"file" : "C:/Users/marti/projetos/GAMSo_Bot/build/websocketpp-download/websocketpp-download-prefix/src/websocketpp-download-stamp/websocketpp-download-test.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"websocketpp-download"
+		],
+		"name" : "websocketpp-download"
+	}
+}
