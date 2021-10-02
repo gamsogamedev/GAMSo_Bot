@@ -6,6 +6,7 @@ const fs = require('fs');
 
 const PREFIX = process.env.PREFIX;
 const TOKEN = process.env.TOKEN;
+const DEV_CHANNEL_ID = process.env.DEV_CHANNEL_ID;
 
 const queue = new Map();
 
@@ -20,6 +21,12 @@ for(const file of commandFiles) {
 client.once("ready", () => {
     console.log("HONK!");
     client.user.setActivity('gamejams!', { type: 'COMPETING' });
+});
+
+client.on("error", (err, command) => {
+    dumpChannel = client.channels.cache.get(DEV_CHANNEL_ID);
+    dumpChannel.send(`Erro no comando ${command}:\n${err.message}`);
+    throw err;
 });
 
 client.on("messageCreate", msg => {
