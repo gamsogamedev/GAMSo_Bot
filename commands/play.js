@@ -29,7 +29,7 @@ async function connectToChannel(channel) {
 function play(guild, song, serverQueue) {
     // Se não tem uma próxima música, saia do canal e delete a fila!
     if (!song) {
-        serverQueue.voiceChannel.leave();
+        serverQueue.voiceChannel.destroy()
         queue.delete(guild.id);
         return;
     }
