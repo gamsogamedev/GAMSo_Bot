@@ -31,49 +31,56 @@ module.exports = {
         let message = await msg.channel.send({embeds: [embed]});
         for(let i = 0; i < amount; i++) message.react(emojis[i]);
 
-
         client.on('messageReactionAdd', async (reaction, user) => {
-            if(reaction.message.partial) await reaction.message.fetch();
-            if(reaction.partial) await reaction.fetch();
-            if(user.bot) return;
-            if(!reaction.message.guild) return;
+            try {
+                if(reaction.message.partial) await reaction.message.fetch();
+                if(reaction.partial) await reaction.fetch();
+                if(user.bot) return;
+                if(!reaction.message.guild) return;
 
-            if(reaction.message.channel.id == msg.channel.id) {
-                if(reaction.emoji.id == null) {
-                    emojiIndex = emojis.indexOf(reaction.emoji.name);
-                } else {
-                    emojiIndex = emojis.indexOf("<:" + reaction.emoji.name + ":" + reaction.emoji.id + ">");
-                }
-                if(emojiIndex != -1) {
-                    if(mode === "mono") {
-                        for(let i = 0; i < amount; i++) {
-                            await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[i]);
-                        }
+                if(reaction.message.channel.id == msg.channel.id) {
+                    if(reaction.emoji.id == null) {
+                        emojiIndex = emojis.indexOf(reaction.emoji.name);
+                    } else {
+                        emojiIndex = emojis.indexOf("<:" + reaction.emoji.name + ":" + reaction.emoji.id + ">");
                     }
-                    await reaction.message.guild.members.cache.get(user.id).roles.add(roles[emojiIndex]);
+                    if(emojiIndex != -1) {
+                        if(mode === "mono") {
+                            for(let i = 0; i < amount; i++) {
+                                await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[i]);
+                            }
+                        }
+                        await reaction.message.guild.members.cache.get(user.id).roles.add(roles[emojiIndex]);
+                    }
+                } else {
+                    return;
                 }
-            } else {
-                return;
+            } catch (err) {
+                client.emit("error", err, "react-role");
             }
         });
 
         client.on('messageReactionRemove', async (reaction, user) => {
-            if(reaction.message.partial) await reaction.message.fetch();
-            if(reaction.partial) await reaction.fetch();
-            if(user.bot) return;
-            if(!reaction.message.guild) return;
+            try {
+                if(reaction.message.partial) await reaction.message.fetch();
+                if(reaction.partial) await reaction.fetch();
+                if(user.bot) return;
+                if(!reaction.message.guild) return;
 
-            if(reaction.message.channel.id == msg.channel.id) {
-                if(reaction.emoji.id == null) {
-                    emojiIndex = emojis.indexOf(reaction.emoji.name);
+                if(reaction.message.channel.id == msg.channel.id) {
+                    if(reaction.emoji.id == null) {
+                        emojiIndex = emojis.indexOf(reaction.emoji.name);
+                    } else {
+                        emojiIndex = emojis.indexOf("<:" + reaction.emoji.name + ":" + reaction.emoji.id + ">");
+                    }
+                    if(emojiIndex != -1) {
+                        await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[emojiIndex]);
+                    }
                 } else {
-                    emojiIndex = emojis.indexOf("<:" + reaction.emoji.name + ":" + reaction.emoji.id + ">");
+                    return;
                 }
-                if(emojiIndex != -1) {
-                    await reaction.message.guild.members.cache.get(user.id).roles.remove(roles[emojiIndex]);
-                }
-            } else {
-                return;
+            } catch(err) {
+                client.emit("error", err, "react-role");
             }
         });
     }
