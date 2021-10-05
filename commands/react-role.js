@@ -3,6 +3,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
     name: 'react-role',
     description: 'Create a message that allows people to get roles when reacting.',
+    adminOnly: true,
     async execute(msg, args, client) {
         if(!args[0] || parseInt(args[0], 10) <= 0) return msg.channel.send("Erro no input!");
         let amount = parseInt(args[0], 10);
