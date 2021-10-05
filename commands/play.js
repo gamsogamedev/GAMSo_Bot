@@ -68,7 +68,6 @@ module.exports = {
         // MAS, nada independe da gente deixar assim :)
         const args = argObject.param;
         const queue = argObject.queue;
-
         // Criando variável de fila e pegando o canal de voz do membro!
         var serverQueue = queue.get(msg.guild.id);
         const voiceChannel = msg.member.voice.channel;
