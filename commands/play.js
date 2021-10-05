@@ -58,7 +58,12 @@ function play(guild, song, serverQueue) {
 module.exports = {
     name: 'play-music',
     description: 'Command that allows people to listen to music.',
-    async execute(msg, args, client, queue) {
+    aliases: ['p'],
+    async execute(msg, args, client, args) {
+	    
+	// Pequena verificação apenas para testar o novo sistema de parâmetros por objeto JS
+	if(!args.queue) return;
+	    
         // Criando variável de fila e pegando o canal de voz do membro!
         var serverQueue = queue.get(msg.guild.id);
         const voiceChannel = msg.member.voice.channel;
