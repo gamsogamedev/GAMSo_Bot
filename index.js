@@ -35,12 +35,32 @@ client.on("messageCreate", msg => {
 
     const command = msg.content.replace(PREFIX, "").split(" ");
 
-    if(command[0] === "react-role" || command[0] === "rr") {
-        if(!isAdmin(msg.member)) return msg.channel.send("Comando exclusivo da administração!");
-        client.commands.get('react-role').execute(msg, command.slice(1), client);
-    } else if(command[0] === "play" || command[0] === "p") {
-        client.commands.get('play-music').execute(msg, command.slice(1), client, queue);
-    }
+    /*
+        Pegando commando como objeto, incluindo os possíveis apelidos do mesmo
+    */
+    const commandObject = client.commands.get(command[1]) || client.commands.find(cmd => (cmd.aliases && cmd.aliases.includes(command[1])));
+
+    if(!commandObject) return;
+    
+    if(commandObject.adminOnly && !isAdmin(msg.member)) return msg.channel.send("Comando exclusivo da administração!");
+    
+    /*
+        Pequena gambiarra abaixo, mas que se implementada corretamente funcionaria assim:
+        - É possível passar uma quantidade "indefinida" de parâmetros para as funções 'execute' dos commandos usando um objeto
+        - Como os objetos em JS são meio que por chave-valor, em cada comando você pode verificar se o campo do objeto que você precisa existe e usá-lo
+        - Ex: no play, verifique se existe o campo "queue", e se existir, use
+        
+        Só talvez seja necessário pensar em uma forma de definir quais são realmente os parâmetros a serem passados em cada comando
+        - Na linha abaixo, estamos sempre passando queue, o que claramente não é necessário
+        - Uma forma de talvez resolver isso seria ter um campo no comando que nos dissesse qual argumento ele deseja?
+    */
+      
+    const param = command.slice(1);
+    const argObject = {  param, queue };
+    
+    // Daria pra colocar essa linha abaixo em um try catch, mas pela forma que vocês tratam os erros, não sei se seria tão útil
+    commandObject.execute(msg, client, argObject);
+    
 });
 
 client.login(TOKEN);
