@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const { AudioPlayer } = require('@discordjs/voice');
 const { Client, Intents, MessageEmbed, Collection } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_VOICE_STATES] });
 const fs = require('fs');
@@ -9,6 +10,7 @@ const TOKEN = process.env.TOKEN;
 const DEV_CHANNEL_ID = process.env.DEV_CHANNEL_ID;
 
 const queue = new Map();
+const player = new AudioPlayer();
 
 client.commands = new Collection();
 
@@ -26,7 +28,7 @@ client.once("ready", () => {
 client.on("error", (err, command) => {
     dumpChannel = client.channels.cache.get(DEV_CHANNEL_ID);
     dumpChannel.send(`Erro no comando ${command}:\n${err.message}`);
-    throw err;
+    //throw err;
 });
 
 client.on("messageCreate", msg => {
@@ -34,37 +36,27 @@ client.on("messageCreate", msg => {
     if(!msg.content.startsWith(PREFIX)) return;
 
     const command = msg.content.replace(PREFIX, "").split(" ");
-
-    /*
-        Pegando commando como objeto, incluindo os possíveis apelidos do mesmo
-    */
-    const commandObject = client.commands.get(command[1]) || client.commands.find(cmd => (cmd.aliases && cmd.aliases.includes(command[1])));
-
-    if(!commandObject) return;
+    const commandObject = client.commands.find(cmd => cmd.aliases.includes(command[0]));
+    if(!commandObject) return //msg.channel.send(`O comando ${command[0]} não existe!`);
     
     if(commandObject.adminOnly && !isAdmin(msg.member)) return msg.channel.send("Comando exclusivo da administração!");
-    
-    /*
-        Pequena gambiarra abaixo, mas que se implementada corretamente funcionaria assim:
-        - É possível passar uma quantidade "indefinida" de parâmetros para as funções 'execute' dos commandos usando um objeto
-        - Como os objetos em JS são meio que por chave-valor, em cada comando você pode verificar se o campo do objeto que você precisa existe e usá-lo
-        - Ex: no play, verifique se existe o campo "queue", e se existir, use
-        
-        Só talvez seja necessário pensar em uma forma de definir quais são realmente os parâmetros a serem passados em cada comando
-        - Na linha abaixo, estamos sempre passando queue, o que claramente não é necessário
-        - Uma forma de talvez resolver isso seria ter um campo no comando que nos dissesse qual argumento ele deseja?
-    */
-      
-    const param = command.slice(1);
-    const argObject = {  param, queue };
-    
-    // Daria pra colocar essa linha abaixo em um try catch, mas pela forma que vocês tratam os erros, não sei se seria tão útil
-    commandObject.execute(msg, client, argObject);
-    
+
+    const param = command.slice(commandObject.slice);
+    const argObject = {
+        param,
+        "queue": commandObject.requirements.includes("queue") ? queue : null,
+        "player": commandObject.requirements.includes("player") ? player : null
+    };
+
+    try {
+        commandObject.execute(msg, client, argObject);
+    } catch(error) {
+        client.emit("error", error, command[0]);
+    }
 });
 
 client.login(TOKEN);
-  
+
 function isAdmin(member) {
     return member.permissions.has("ADMINISTRATOR");
 }

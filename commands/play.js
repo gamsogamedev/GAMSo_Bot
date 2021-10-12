@@ -1,39 +1,40 @@
 const ytdl = require('ytdl-core');
 const ysapi = require('youtube-search-api');
-const { AudioPlayerStatus, joinVoiceChannel, createAudioResource, createAudioPlayer, entersState, VoiceConnectionStatus, StreamType } = require('@discordjs/voice');
+const { AudioPlayerState, joinVoiceChannel, createAudioResource, createAudioPlayer, entersState, VoiceConnectionStatus, StreamType, getVoiceConnection } = require('@discordjs/voice');
 const { createDiscordJSAdapter } = require('./requirements/adapter');
-
-// Criando player de áudio do Discord!
-const player = createAudioPlayer();
 
 async function connectToChannel(channel) {
 
     // Conectando ao canal!
-	const connection = joinVoiceChannel({
-		channelId: channel.id,
-		guildId: channel.guild.id,
-		adapterCreator: createDiscordJSAdapter(channel),
-	});
+    const connection = joinVoiceChannel({
+        channelId: channel.id,
+        guildId: channel.guild.id,
+        adapterCreator: createDiscordJSAdapter(channel),
+    });
 
-	try {
+    try {
         // Esperando o bot ficar pronto para tocar!
-		await entersState(connection, VoiceConnectionStatus.Ready, 30e3);
-		return connection;
-	} catch (error) {
-		// Não ficou pronto? Destrua a conexão e pare a execução do programa!
+        await entersState(connection, VoiceConnectionStatus.Ready, 30e3);
+        return connection;
+    } catch (error) {
+        // Não ficou pronto? Destrua a conexão e pare a execução do programa!
         connection.destroy();
-		throw error;
-	}
+        throw error;
+    }
 }
 
-function play(guild, song, serverQueue) {
+function play(guild, song, queue, player) {
     // Se não tem uma próxima música, saia do canal e delete a fila!
     if (!song) {
-        serverQueue.voiceChannel.destroy()
+        getVoiceConnection(guild.id).disconnect();
+        //serverQueue.voiceChannel.destroy()
         queue.delete(guild.id);
         return;
     }
   
+    const serverQueue = queue.get(guild.id);
+    if(!serverQueue) return;
+
     // Crie o recurso de áudio com a música!
     const playable = createAudioResource(ytdl(song.url, { filter: 'audioonly', highWaterMark: 1<<25 }));
 
@@ -43,11 +44,11 @@ function play(guild, song, serverQueue) {
     // Crie o evento: quando não estiver tocando nada, dê play na próxima música!
     player.on("idle", () => {
         serverQueue.songs.shift();
-        play(guild, serverQueue.songs[0], serverQueue);
+        play(guild, serverQueue.songs[0], queue, player);
     });
 
     // Crie o evento: quando der erro, imprima-o no console!
-    player.on("error", error => console.error(error));;
+    player.on("error", error => console.error(error));
 
     // Inscreva o player de áudio na conexão do canal de voz!
     serverQueue.connection.subscribe(player);
@@ -56,18 +57,22 @@ function play(guild, song, serverQueue) {
 }
 
 module.exports = {
-    name: 'play-music',
-    description: 'Command that allows people to listen to music.',
-    aliases: ['p'],
+    name: 'play-song',
+    description: 'Command that allows people to listen to songs.',
+    adminOnly: false,
+    aliases: ['play', 'p'],
+    requirements: ['queue', 'player'],
+    slice: 1,
     async execute(msg, client, argObject) {
-	    
-	    // Pequena verificação apenas para testar o novo sistema de parâmetros por objeto JS
-	    if(!argObject.queue) return;
-	    
-        // Gambiarra porque não queria rescrever um monte de coisa...
-        // MAS, nada independe da gente deixar assim :)
+        if(!argObject.queue) return;
+        
         const args = argObject.param;
         const queue = argObject.queue;
+        const player = argObject.player;
+
+        if(!args[0] && player.state.status === 'paused') {player.unpause(); return;}
+        if(!args[0]) return;
+
         // Criando variável de fila e pegando o canal de voz do membro!
         var serverQueue = queue.get(msg.guild.id);
         const voiceChannel = msg.member.voice.channel;
@@ -115,7 +120,7 @@ module.exports = {
                 queueContruct.connection = connection;
                 serverQueue = queue.get(msg.guild.id);
                 // Chamando play() para tocar a música!
-                play(msg.guild, queueContruct.songs[0], serverQueue);
+                play(msg.guild, queueContruct.songs[0], queue, player);
             } catch (err) {
                 // Vish, deu erro? Imprima o erro no console, delete a fila do servidor e envie no chat o erro!
                 console.log(err);

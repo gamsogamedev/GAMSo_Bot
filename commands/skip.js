@@ -8,6 +8,8 @@ module.exports = {
     async execute(msg, client, argObject) {
         const player = argObject.player;
 
-        player.stop();
+        player.stop(true);
+
+        return msg.channel.send(`A música foi pulada!`);
     }
 }
